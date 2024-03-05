@@ -1,0 +1,179 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #222;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background-image: url('sunset-silhouettes-trees-mountains-generative-ai.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
+.card {
+    width: 90%;
+    max-width: 470px;
+    background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1)), linear-gradient(135deg, #02e8f852, #eec6a6);
+    color: #fff;
+    margin: 100px auto 0;
+    border-radius: 20px;
+    padding: 40px 35px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(12, 0, 0, 0.23);
+    position: relative; /* Add position relative for z-index */
+    z-index: 1; /* Ensure the card stays above the blurred background */
+}
+
+.weather-icon {
+    width: 170px;
+    margin-top: 30px;
+}
+
+/* Styles for different weather conditions */
+.weather-icon.rain {
+    background-image: url('10087.jpg'); /* Replace with the path to your rainy weather image */
+}
+
+.weather-icon.snow {
+    background-image: url('6162750.jpg'); /* Replace with the path to your snowy weather image */
+}
+
+.weather-icon.sunny {
+    background-image: url('2310-w062-n005-285A-p30-285.jpg'); /* Replace with the path to your sunny weather image */
+}
+
+.weather-icon.clouds {
+    background-image: url('5726957.jpg'); /* Replace with the path to your cloudy weather image */
+}
+
+.weather-icon.windy {
+    background-image: url('5255894.jpg'); /* Replace with the path to your windy weather image */
+}
+
+
+
+
+.search {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.search input {
+    border: 0;
+    outline: 0;
+    background: #ebfffc;
+    color: #555;
+    padding: 10px 25px;
+    height: 60px;
+    border-radius: 30px;
+    flex: 1;
+    margin-right: 16px;
+    font-size: 18px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+}
+
+.search button{
+    border: 0;
+    outline: 0;
+    background: #ebfffc;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+
+}
+
+.search img{
+    width: 30px;
+}
+
+.weather-icon{
+    width: 170px;
+    margin-top: 30px;
+}
+
+.weather h1{
+    font-size: 80px;
+    font-weight: 500;
+}
+
+.weather h2{
+    font-size: 45px;
+    font-weight: 400;
+    margin-top: -10px;
+}
+
+.details{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;    
+    margin-top: 50px;
+
+}
+
+.col{
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+.col img{
+    width: 40px;
+    margin-right: 10px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    padding: 2px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    justify-content: space-evenly;
+    margin-right: 10px;
+}
+
+.humidity span,
+.wind span {
+    margin-right: 10px; /* Adjust this value as needed to control the space between text and image */
+    margin-left: 10px;
+}
+
+.humidity,
+.wind {
+    font-size: 28px;
+    margin-top: -6px;
+    display: flex; /* Ensures that margin properties work correctly */
+}
+.weather {
+    display: none;
+}
+
+.error {
+    text-align: left;
+    margin-left: 10px;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none;
+}
+
+
