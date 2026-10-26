@@ -1,0 +1,10 @@
+'use strict';
+const {test}=require('node:test');const assert=require('node:assert/strict');
+const {evaluate,rank,normalizePreferences}=require('../public/engine');
+const slot={time:Date.now()+3600000,tempC:26,feelsLikeC:26,windKmh:30,rainProbability:70};
+test('default preferences do not alter base score unexpectedly',()=>assert.equal(evaluate(slot,'cycle').score,evaluate(slot,'cycle',null).score));
+test('more rain tolerance increases score when rainy',()=>assert.ok(evaluate(slot,'cycle',{rainTolerance:90}).score>evaluate(slot,'cycle',{rainTolerance:10}).score));
+test('more wind tolerance increases score when windy',()=>assert.ok(evaluate(slot,'cycle',{windTolerance:90}).score>evaluate(slot,'cycle',{windTolerance:10}).score));
+test('custom temperature range affects score',()=>assert.ok(evaluate({...slot,rainProbability:0,windKmh:0},'walk',{idealMin:25,idealMax:30}).score>evaluate({...slot,rainProbability:0,windKmh:0},'walk',{idealMin:10,idealMax:18}).score));
+test('invalid preference values are clamped',()=>assert.deepEqual(normalizePreferences({idealMin:-100,idealMax:100,rainTolerance:900,windTolerance:-20}),{idealMin:-30,idealMax:50,rainTolerance:100,windTolerance:0}));
+test('rank accepts personal preferences',()=>assert.equal(rank([slot], 'cycle',Date.now(),{rainTolerance:90})[0].score,evaluate(slot,'cycle',{rainTolerance:90}).score));

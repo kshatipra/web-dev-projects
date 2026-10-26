@@ -1,0 +1,11 @@
+'use strict';
+const {test}=require('node:test');const assert=require('node:assert/strict');
+const {routeSamples}=require('../server');
+const WeatherEngine=require('../public/engine');global.WeatherEngine=WeatherEngine;
+const RouteEngine=require('../public/route-engine');
+const sample=(time,scoreRain=0)=>({time,tempC:18,feelsLikeC:18,windKmh:8,rainProbability:scoreRain});
+test('route samples origin midpoint destination',()=>{const pts=routeSamples({geometry:{coordinates:[[8,48],[8.1,48],[8.2,48]]}});assert.equal(pts.length,3);assert.equal(pts[0].lon,8);assert.equal(pts[1].lon,8.1);assert.equal(pts[2].lon,8.2);});
+test('closest forecast slot',()=>{const s=[sample(1000),sample(4000),sample(7000)];assert.equal(RouteEngine.closest(s,3800).time,4000);});
+test('route score averages three points',()=>{const start=Date.now()+3600000;const r={durationMinutes:60,samples:[0,.5,1].map((fraction,i)=>({label:String(i),fraction,slots:[sample(start+fraction*3600000,i===1?100:0)]}))};const o=RouteEngine.evaluateDeparture(r,start);assert.equal(o.points.length,3);assert.ok(o.score<100);assert.equal(o.weakest,'1');});
+test('missing forecast coverage does not invent a score',()=>{const r={durationMinutes:60,samples:[0,.5,1].map(fraction=>({fraction,label:'x',slots:[sample(1000)]}))};assert.equal(RouteEngine.evaluateDeparture(r,Date.now()+86400000),null);});
+test('compare sorts by score',()=>{const t=Date.now()+3600000;const r={durationMinutes:0,samples:[0,.5,1].map(fraction=>({fraction,label:'x',slots:[sample(t,100),sample(t+3600000,0)]}))};const out=RouteEngine.compare(r,[t,t+3600000],'cycle');assert.equal(out[0].departure,t+3600000);});

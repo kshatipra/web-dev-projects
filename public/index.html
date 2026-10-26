@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0b1326">
+<meta name="description" content="WeatherWise turns forecasts into practical activity recommendations.">
+<title>WeatherWise — Make the most of the weather</title>
+<link rel="stylesheet" href="/style.css"><script src="/engine.js" defer></script><script src="/app.js" defer></script><script src="/route-engine.js" defer></script><script src="/route-app.js" defer></script>
+</head>
+<body>
+<main class="shell">
+<header class="nav"><div class="brand"><span class="brand-icon">◒</span> weatherwise<span class="accent">.</span></div><span class="nav-note">WEATHER → DECISIONS</span></header>
+<section class="hero"><p class="eyebrow">THE FORECAST, WITH A PURPOSE</p><h1>Don't just check the weather.<br><em>Make a better plan.</em></h1><p>Find the best forecast windows for your day. Simple recommendations, with reasons you can understand.</p></section>
+<form id="search-form" class="search" role="search"><label class="sr-only" for="city">City</label><input id="city" name="city" placeholder="Enter a city, e.g. Berlin" autocomplete="address-level2" maxlength="80" required><button id="search-button" type="submit">Explore forecast <span aria-hidden="true">↗</span></button></form>
+<section class="saved-section" aria-label="Saved cities"><div class="saved-heading"><span class="eyebrow">YOUR PLACES</span><button type="button" class="secondary small" id="save-city" disabled>☆ Save current city</button></div><div id="saved-cities" class="city-chips"><span class="muted">Saved cities will appear here, on this device.</span></div></section>
+<p id="status" class="status" role="status" aria-live="polite">Search a city to begin.</p>
+<div id="dashboard" hidden>
+<section class="current card"><div><p class="eyebrow">CURRENT CONDITIONS</p><h2 id="place"></h2><p id="description" class="muted"></p></div><div class="current-right"><span id="weather-symbol" class="weather-symbol" aria-hidden="true">☀</span><strong id="temperature"></strong></div><div class="metrics"><span>Feels like <b id="feels"></b></span><span>Humidity <b id="humidity"></b></span><span>Wind <b id="wind"></b></span></div></section>
+<section class="planner"><div class="section-head"><div><p class="eyebrow">01 / SMART ACTIVITY PLANNER</p><h2>What's your plan?</h2><p class="muted">We rank available 3-hour forecast slots by temperature, wind and precipitation probability.</p></div><label class="select-label" for="activity">ACTIVITY<select id="activity"><option value="walk">Walking</option><option value="run">Running</option><option value="cycle">Cycling</option><option value="photo">Photography</option><option value="outdoors">Outdoor work</option></select></label></div>
+<details class="preferences card" id="preferences-panel"><summary>⚙ Personalize your comfort settings</summary><p class="muted">Adjust what feels comfortable to you. Settings are saved only in this browser.</p><div class="pref-grid"><label>Preferred minimum (°C)<input id="pref-min" type="number" min="-30" max="45" step="1" value="12"></label><label>Preferred maximum (°C)<input id="pref-max" type="number" min="-30" max="50" step="1" value="24"></label><label>Rain tolerance <span id="rain-value">50/100</span><input id="pref-rain" type="range" min="0" max="100" value="50"></label><label>Wind tolerance <span id="wind-value">50/100</span><input id="pref-wind" type="range" min="0" max="100" value="50"></label></div><div class="pref-actions"><button type="button" id="reset-prefs" class="secondary">Reset preferences</button><span class="muted">50 = default tolerance. Higher = more tolerant.</span></div></details>
+<div id="recommendations" class="recommendations" aria-live="polite"></div><p class="footnote">Scores are indicative heuristics, not safety guarantees. Forecast intervals are approximately 3 hours apart; this app cannot identify exact minute-by-minute conditions.</p></section>
+<section class="departure"><div class="section-head"><div><p class="eyebrow">02 / LEAVE NOW OR LATER?</p><h2>Compare the next forecast windows.</h2><p class="muted">For your selected activity. The first slot is the earliest available forecast, not necessarily this exact moment.</p></div></div><div id="departure-options" class="departures"></div></section>
+
+<section class="route-section" aria-labelledby="route-title">
+  <div class="section-head"><div><p class="eyebrow">03 / WEATHER ALONG THE WAY</p><h2 id="route-title">Plan a weather-aware drive.</h2><p class="muted">Compare forecast conditions at the origin, along the driving route, and at the destination.</p></div></div>
+  <form id="route-form" class="route-form card">
+    <label>From <input id="route-from" maxlength="80" placeholder="e.g. Stuttgart" required></label>
+    <label>To <input id="route-to" maxlength="80" placeholder="e.g. Heidelberg" required></label>
+    <label>Departure <select id="route-departure"><option value="0">Next full hour</option><option value="1">One hour later</option><option value="2">Two hours later</option></select></label>
+    <button type="submit" id="route-submit">Compare route weather ↗</button>
+  </form>
+  <p id="route-status" class="status" role="status" aria-live="polite">Enter two cities to compare weather along a driving route.</p>
+  <div id="route-results" hidden><div id="route-summary" class="card"></div><div id="route-options" class="route-options"></div><p class="footnote">Weather samples are from 3-hour forecast intervals and may not match exact arrival times. OSRM route estimates do not include traffic. Scores are indicative, not safety guidance. No turn-by-turn directions are provided.</p></div>
+</section>
+<section class="method card"><p class="eyebrow">BEHIND THE RECOMMENDATION</p><h2>Clear logic. No mystery score.</h2><p>Each activity starts with its own comfortable temperature range and wind threshold. Your optional preferences override the preferred temperature range and adjust rain/wind penalties. Scores start at 100 and lose points for uncomfortable temperatures, higher precipitation probability, and wind above the activity threshold. All three penalties are shown for the top recommendation.</p><p class="muted">Weather data: OpenWeatherMap current weather + 5-day / 3-hour forecast. Recommendations use forecast data, not live road conditions or air quality. Route comparisons additionally use OSRM estimated driving routes, without traffic.</p></section>
+</div>
+<footer>WeatherWise · Built with vanilla JavaScript + Node.js · Forecast data by OpenWeatherMap</footer>
+</main>
+</body></html>

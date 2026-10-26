@@ -1,0 +1,1 @@
+{"name":"weatherwise","version":"4.0.0","private":true,"description":"Personalized weather decisions and route-aware driving weather comparisons","scripts":{"start":"node server.js","test":"node --test"},"engines":{"node":">=20"}}
