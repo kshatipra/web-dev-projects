@@ -1,4 +1,4 @@
-# WeatherWise 4.0 — Route-aware weather decisions
+# WeatherWise — Route-aware weather decisions
 
 WeatherWise turns forecast data into explainable recommendations for activities and driving-route departure windows.
 
